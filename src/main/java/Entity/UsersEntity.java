@@ -2,7 +2,11 @@ package Entity;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
+@NamedQuery(name =  "UsersEntity.ByLogin",
+        query = "select u from UsersEntity u where u.login =?1 ")
 @Entity
 @Table(name = "users", schema = "labhibernate", catalog = "")
 public class UsersEntity {
@@ -26,7 +30,11 @@ public class UsersEntity {
     @Column(name = "email")
     private String email;
     @OneToMany(mappedBy = "usersByUserId")
-    private Collection<BookBorrowsEntity> bookBorrowsByIdUser;
+    private List<BookBorrowsEntity> bookBorrowsByIdUser;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @JoinTable(name="book_borrows",joinColumns = @JoinColumn(name="user_id"),inverseJoinColumns = @JoinColumn(name="book_copy_id"))
+    private Set<BookCopiesEntity> bookCopiesByUser;
 
     public int getIdUser() {
         return idUser;
@@ -104,11 +112,19 @@ public class UsersEntity {
         return result;
     }
 
-    public Collection<BookBorrowsEntity> getBookBorrowsByIdUser() {
+    public List<BookBorrowsEntity> getBookBorrowsByIdUser() {
         return bookBorrowsByIdUser;
     }
 
-    public void setBookBorrowsByIdUser(Collection<BookBorrowsEntity> bookBorrowsByIdUser) {
+    public void setBookBorrowsByIdUser(List<BookBorrowsEntity> bookBorrowsByIdUser) {
         this.bookBorrowsByIdUser = bookBorrowsByIdUser;
+    }
+
+    public Set<BookCopiesEntity> getBookCopiesByUser() {
+        return bookCopiesByUser;
+    }
+
+    public void setBookCopiesByUser(Set<BookCopiesEntity> bookCopiesByUser) {
+        this.bookCopiesByUser = bookCopiesByUser;
     }
 }

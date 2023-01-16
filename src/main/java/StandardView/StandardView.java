@@ -1,14 +1,19 @@
 package StandardView;
 
 import Entity.UsersEntity;
+import Service.Login.ILoginService;
+import Service.Login.LoginService;
+import Service.Register.IRegisterService;
+import Service.Register.RegisterService;
+import org.apache.commons.validator.ValidatorException;
 
 import java.util.Scanner;
 
-public class View {
+public class StandardView implements IView {
 
     Scanner scanner = new Scanner(System.in);
 
-
+    @Override
     public void menu(){
         boolean shouldBreak = true;
         while(shouldBreak){
@@ -42,6 +47,11 @@ public class View {
         System.out.println("Podaj haslo:");
         password= scanner.nextLine();
 
+        ILoginService loginService = new LoginService();
+        UsersEntity user = loginService.login(login,password);
+        if (user!=null){
+            //do sth
+        }
 //        UsersEntity user  = userS.login(login,password);
 //        if(user != null) {
 //            NoteService noteS = new NoteService(notesO, user);
@@ -59,8 +69,15 @@ public class View {
         String name = scanner.nextLine();
         System.out.println("Podaj nazwisko");
         String surname = scanner.nextLine();
+        System.out.println("Podaj email");
+        String email = scanner.nextLine();
 
-        //userS.register(login,password,name,surname);
+        IRegisterService registerService = new RegisterService();
+        try {
+            registerService.registerUser(login,password,name,surname,email);
+        } catch (ValidatorException e) {
+            System.out.println("Nieprawidlowy adres email");
+        }
     }
 
 }

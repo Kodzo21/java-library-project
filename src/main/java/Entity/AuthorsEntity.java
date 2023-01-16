@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
 
+@NamedQuery(name =  "AuthorsEntity.ByName",
+        query = "select u from AuthorsEntity u where u.name like :name ")
+
 @Entity
 @Table(name = "authors", schema = "labhibernate", catalog = "")
 public class AuthorsEntity {
@@ -12,11 +15,8 @@ public class AuthorsEntity {
     @Column(name = "idAuthor")
     private int idAuthor;
     @Basic
-    @Column(name = "firstName")
-    private String firstName;
-    @Basic
-    @Column(name = "lastName")
-    private String lastName;
+    @Column(name = "name")
+    private String name;
     @ManyToMany(mappedBy ="bookAuthorsByIdBook" )
     private Set<BooksEntity> authorBooksByIdAuthor;
 
@@ -28,20 +28,12 @@ public class AuthorsEntity {
         this.idAuthor = idAuthor;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -52,8 +44,7 @@ public class AuthorsEntity {
         AuthorsEntity that = (AuthorsEntity) o;
 
         if (idAuthor != that.idAuthor) return false;
-        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
     }
@@ -61,8 +52,7 @@ public class AuthorsEntity {
     @Override
     public int hashCode() {
         int result = idAuthor;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 

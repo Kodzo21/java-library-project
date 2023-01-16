@@ -2,6 +2,7 @@ package Entity;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "book_copies", schema = "labhibernate", catalog = "")
@@ -24,6 +25,9 @@ public class BookCopiesEntity {
     @ManyToOne
     @JoinColumn(name = "publisher_id", referencedColumnName = "idPublisher", nullable = false)
     private PublishersEntity publishersByPublisherId;
+
+    @ManyToMany(mappedBy="bookCopiesByUser")
+    private Set<UsersEntity> usersByBookCopy;
 
     public int getIdCopy() {
         return idCopy;

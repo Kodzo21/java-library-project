@@ -5,6 +5,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+
+@NamedQuery(name =  "BooksEntity.ByTitle",
+        query = "select u from BooksEntity u where u.title like :name")
 @Entity
 @Table(name = "books", schema = "labhibernate", catalog = "")
 public class BooksEntity {
