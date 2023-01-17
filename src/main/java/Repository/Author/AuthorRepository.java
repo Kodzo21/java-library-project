@@ -41,9 +41,9 @@ public class AuthorRepository implements IAuthorRepository{
     @Override
     public AuthorsEntity findByName(String name) {
         TypedQuery<AuthorsEntity> authorNames = em.createNamedQuery("AuthorsEntity.ByName",AuthorsEntity.class);
-        authorNames.setParameter("name",name);
+        authorNames.setParameter("name",'%' + name + '%');
         List<AuthorsEntity> authors = authorNames.getResultList();
-        if (authors!=null)
+        if (!authors.isEmpty())
             return authors.get(0);
         else return null;
 

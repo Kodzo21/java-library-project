@@ -3,6 +3,8 @@ package Entity;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+@NamedQuery(name =  "BookBorrows.NotReturned",
+        query = "select u from BookBorrowsEntity u where u.bookCopyId=:bookCopyID and u.userId=:userID and u.returnDate is NULL")
 @Entity
 @Table(name = "book_borrows", schema = "labhibernate", catalog = "")
 public class BookBorrowsEntity {
@@ -13,18 +15,14 @@ public class BookBorrowsEntity {
     @Basic
     @Column(name = "start_time")
     private Timestamp startTime;
+
     @Basic
-    @Column(name = "end_time")
-    private Timestamp endTime;
-    @Basic
-    @Column(name = "book_copy_id",insertable = false,updatable = false)
+    @Column(name = "book_copy_id", insertable = false, updatable = false)
     private int bookCopyId;
     @Basic
-    @Column(name = "user_id",insertable = false,updatable = false)
+    @Column(name = "user_id", insertable = false, updatable = false)
     private int userId;
-    @Basic
-    @Column(name = "is_returned")
-    private byte isReturned;
+
     @Basic
     @Column(name = "return_date")
     private Timestamp returnDate;
@@ -51,13 +49,6 @@ public class BookBorrowsEntity {
         this.startTime = startTime;
     }
 
-    public Timestamp getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Timestamp endTime) {
-        this.endTime = endTime;
-    }
 
     public int getBookCopyId() {
         return bookCopyId;
@@ -75,13 +66,6 @@ public class BookBorrowsEntity {
         this.userId = userId;
     }
 
-    public byte getIsReturned() {
-        return isReturned;
-    }
-
-    public void setIsReturned(byte isReturned) {
-        this.isReturned = isReturned;
-    }
 
     public Timestamp getReturnDate() {
         return returnDate;
@@ -101,9 +85,7 @@ public class BookBorrowsEntity {
         if (idBorrow != that.idBorrow) return false;
         if (bookCopyId != that.bookCopyId) return false;
         if (userId != that.userId) return false;
-        if (isReturned != that.isReturned) return false;
         if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null) return false;
-        if (endTime != null ? !endTime.equals(that.endTime) : that.endTime != null) return false;
         if (returnDate != null ? !returnDate.equals(that.returnDate) : that.returnDate != null) return false;
 
         return true;
@@ -113,10 +95,8 @@ public class BookBorrowsEntity {
     public int hashCode() {
         int result = idBorrow;
         result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
-        result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
         result = 31 * result + bookCopyId;
         result = 31 * result + userId;
-        result = 31 * result + (int) isReturned;
         result = 31 * result + (returnDate != null ? returnDate.hashCode() : 0);
         return result;
     }

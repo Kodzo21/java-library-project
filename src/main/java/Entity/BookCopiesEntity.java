@@ -1,7 +1,9 @@
 package Entity;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,8 +19,11 @@ public class BookCopiesEntity {
     @Basic
     @Column(name = "publisher_id",insertable = false,updatable = false)
     private int publisherId;
+    @Basic
+    @Column(name="isFree")
+    private byte isFree;
     @OneToMany(mappedBy = "bookCopiesByBookCopyId")
-    private Collection<BookBorrowsEntity> bookBorrowsByIdCopy;
+    private List<BookBorrowsEntity> bookBorrowsByIdCopy;
     @ManyToOne
     @JoinColumn(name = "book_id", referencedColumnName = "idBook", nullable = false)
     private BooksEntity booksByBookId;
@@ -53,6 +58,14 @@ public class BookCopiesEntity {
         this.publisherId = publisherId;
     }
 
+    public byte isFree() {
+        return isFree;
+    }
+
+    public void setFree(byte free) {
+        isFree = free;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,11 +88,11 @@ public class BookCopiesEntity {
         return result;
     }
 
-    public Collection<BookBorrowsEntity> getBookBorrowsByIdCopy() {
+    public List<BookBorrowsEntity> getBookBorrowsByIdCopy() {
         return bookBorrowsByIdCopy;
     }
 
-    public void setBookBorrowsByIdCopy(Collection<BookBorrowsEntity> bookBorrowsByIdCopy) {
+    public void setBookBorrowsByIdCopy(List<BookBorrowsEntity> bookBorrowsByIdCopy) {
         this.bookBorrowsByIdCopy = bookBorrowsByIdCopy;
     }
 
@@ -97,5 +110,20 @@ public class BookCopiesEntity {
 
     public void setPublishersByPublisherId(PublishersEntity publishersByPublisherId) {
         this.publishersByPublisherId = publishersByPublisherId;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(booksByBookId).append(", wydawnictwo: ").append(publishersByPublisherId).append(", numer kopii ksiazki:" ).append(idCopy);
+        if (isFree()==0) {
+            BookBorrowsEntity bookBorrows = bookBorrowsByIdCopy.get(bookBorrowsByIdCopy.size() - 1);
+            Timestamp startTime = bookBorrows.getStartTime();
+            LocalDateTime endTime = startTime.toLocalDateTime();
+            endTime = endTime.plusWeeks(4);
+            sb.append(", data wypozyczenia: ").append(startTime).append(", nalezy zwrocic do: ").append(endTime);
+        }
+
+        return sb.toString();
     }
 }

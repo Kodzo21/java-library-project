@@ -50,6 +50,8 @@ public class StandardView implements IView {
         ILoginService loginService = new LoginService();
         UsersEntity user = loginService.login(login,password);
         if (user!=null){
+            UserView userView = new UserView(user.getIdUser());
+            userView.menu();
             //do sth
         }
 //        UsersEntity user  = userS.login(login,password);

@@ -3,6 +3,7 @@ package Entity;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -25,7 +26,7 @@ public class BooksEntity {
     @JoinTable(name="book_author",joinColumns = @JoinColumn(name="book_id"),inverseJoinColumns = @JoinColumn(name="author_id"))
     private Set<AuthorsEntity> bookAuthorsByIdBook ;
     @OneToMany(mappedBy = "booksByBookId")
-    private Collection<BookCopiesEntity> bookCopiesByIdBook;
+    private List<BookCopiesEntity> bookCopiesByIdBook;
     @ManyToOne
     @JoinColumn(name = "idCategory", referencedColumnName = "idCategory", nullable = false)
     private CategoriesEntity categoriesByIdCategory;
@@ -84,11 +85,11 @@ public class BooksEntity {
         this.bookAuthorsByIdBook = bookAuthorsByIdBook;
     }
 
-    public Collection<BookCopiesEntity> getBookCopiesByIdBook() {
+    public List<BookCopiesEntity> getBookCopiesByIdBook() {
         return bookCopiesByIdBook;
     }
 
-    public void setBookCopiesByIdBook(Collection<BookCopiesEntity> bookCopiesByIdBook) {
+    public void setBookCopiesByIdBook(List<BookCopiesEntity> bookCopiesByIdBook) {
         this.bookCopiesByIdBook = bookCopiesByIdBook;
     }
 
@@ -98,5 +99,15 @@ public class BooksEntity {
 
     public void setCategoriesByIdCategory(CategoriesEntity categoriesByIdCategory) {
         this.categoriesByIdCategory = categoriesByIdCategory;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Ksiazka: ").append("id:").append(idBook)
+                .append(", tytul:'").append(title).append('\'').append(", autorzy:");
+        bookAuthorsByIdBook.forEach(a->sb.append(a.getName()).append("   "));
+        sb.append(", kategoria: ").append(categoriesByIdCategory);
+        return sb.toString();
     }
 }

@@ -59,4 +59,9 @@ public class PublishersEntity {
     public void setBookCopiesByIdPublisher(Collection<BookCopiesEntity> bookCopiesByIdPublisher) {
         this.bookCopiesByIdPublisher = bookCopiesByIdPublisher;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -50,7 +50,7 @@ public class BookRepository implements IBookRepository{
     @Override
     public List<BooksEntity> findByTitle(String title) {
         TypedQuery<BooksEntity> bookTitles = em.createNamedQuery("BooksEntity.ByTitle",BooksEntity.class);
-        bookTitles.setParameter("name",title);
+        bookTitles.setParameter("name",'%'+title+'%');
         return bookTitles.getResultList();
     }
 

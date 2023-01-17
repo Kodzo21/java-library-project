@@ -59,4 +59,9 @@ public class CategoriesEntity {
     public void setBooksByIdCategory(Collection<BooksEntity> booksByIdCategory) {
         this.booksByIdCategory = booksByIdCategory;
     }
+
+    @Override
+    public String toString() {
+        return categoryName;
+    }
 }

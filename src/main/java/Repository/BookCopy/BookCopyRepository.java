@@ -1,11 +1,13 @@
 package Repository.BookCopy;
 
 import Entity.BookCopiesEntity;
+import Entity.BooksEntity;
 import Entity.UsersEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
+import java.util.List;
 import java.util.Set;
 
 public class BookCopyRepository implements IBookCopyRepository {
@@ -37,8 +39,27 @@ public class BookCopyRepository implements IBookCopyRepository {
     }
 
     @Override
+    public BookCopiesEntity findByID(int id) {
+        return em.find(BookCopiesEntity.class, id);
+    }
+
+    @Override
     public Set<BookCopiesEntity> findBookCopiesByUser(int userID) {
         UsersEntity user = em.find(UsersEntity.class, userID);
         return user.getBookCopiesByUser();
+    }
+
+    @Override
+    public BookCopiesEntity findFreeBookCopy(int bookID) {
+        BooksEntity book = em.find(BooksEntity.class,bookID);
+        if(book!=null) {
+            List<BookCopiesEntity> books = book.getBookCopiesByIdBook();
+            for (BookCopiesEntity bookCopy : books
+            ) {
+                if (bookCopy.isFree() == (byte) 1)
+                    return bookCopy;
+            }
+        }
+        return null;
     }
 }

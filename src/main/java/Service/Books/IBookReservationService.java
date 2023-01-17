@@ -1,6 +1,6 @@
 package Service.Books;
 
 public interface IBookReservationService {
-    void reserveBook(int id);
-    void returnBook(int id);
+    void reserveBook(int bookID,int userID) throws Exception;
+    void returnBook(int bookCopyID, int userID);
 }

@@ -9,6 +9,8 @@ import Repository.Author.AuthorRepository;
 import Repository.Author.IAuthorRepository;
 import Repository.Book.BookRepository;
 import Repository.Book.IBookRepository;
+import Repository.BookCopy.BookCopyRepository;
+import Repository.BookCopy.IBookCopyRepository;
 import Repository.User.IUserRepository;
 import Repository.User.UserRepository;
 
@@ -33,8 +35,15 @@ public class BookSearchService implements IBookSearchService {
                 = new AuthorRepository(EntityManagerSingleton.getInstance().getEntityManager());
         AuthorsEntity author = authorRepository.findByName(authorName);
 
-        List<BooksEntity> books = bookRepository.findByAuthor(author);
-        return books;
+        return bookRepository.findByAuthor(author);
+    }
+
+    @Override
+    public List<BookCopiesEntity> borrowedBooks(int userID) {
+        IBookCopyRepository bookCopyRepository
+                = new BookCopyRepository(EntityManagerSingleton.getInstance().getEntityManager());
+        return bookCopyRepository
+                .findBookCopiesByUser(userID).stream().toList();
     }
 
 //    @Override
