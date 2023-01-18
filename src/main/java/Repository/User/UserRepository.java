@@ -3,6 +3,7 @@ package Repository.User;
 import Entity.BookBorrowsEntity;
 import Entity.BookCopiesEntity;
 import Entity.UsersEntity;
+import org.hibernate.Session;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;

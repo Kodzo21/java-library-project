@@ -47,6 +47,7 @@ public class UserView implements IView{
                 }
             }catch (InputMismatchException e){
                 System.out.println("Nieprawidlowa opcja - sprobuj ponownie");
+                scanner.nextLine();
             }
         }
     }
@@ -86,9 +87,8 @@ public class UserView implements IView{
         System.out.println("Podaj autora ksiazki:");
         String authorName = scanner.nextLine();
         List<BooksEntity> books = bookSearchService.findByAuthor(authorName);
-        if (books==null)
-            System.out.println("Nie znaleziono pasujacych ksiazek");
-        else books.forEach(System.out::println);
+        if (books!=null)
+            books.forEach(System.out::println);
     }
 
     private void doReserveBook(){

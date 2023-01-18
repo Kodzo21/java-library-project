@@ -34,8 +34,13 @@ public class BookSearchService implements IBookSearchService {
         IAuthorRepository authorRepository
                 = new AuthorRepository(EntityManagerSingleton.getInstance().getEntityManager());
         AuthorsEntity author = authorRepository.findByName(authorName);
-
-        return bookRepository.findByAuthor(author);
+        if(author!=null) {
+                    return bookRepository.findByAuthor(author);
+        }
+        else{
+            System.out.println("Nie znaleziono pasujacych ksiazek");
+            return null;
+        }
     }
 
     @Override
