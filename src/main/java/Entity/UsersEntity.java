@@ -34,7 +34,7 @@ public class UsersEntity {
 
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     @JoinTable(name="book_borrows",joinColumns = @JoinColumn(name="user_id"),inverseJoinColumns = @JoinColumn(name="book_copy_id"))
-    private Set<BookCopiesEntity> bookCopiesByUser;
+    private List<BookCopiesEntity> bookCopiesByUser;
 
     public int getIdUser() {
         return idUser;
@@ -120,11 +120,11 @@ public class UsersEntity {
         this.bookBorrowsByIdUser = bookBorrowsByIdUser;
     }
 
-    public Set<BookCopiesEntity> getBookCopiesByUser() {
+    public List<BookCopiesEntity> getBookCopiesByUser() {
         return bookCopiesByUser;
     }
 
-    public void setBookCopiesByUser(Set<BookCopiesEntity> bookCopiesByUser) {
+    public void setBookCopiesByUser(List<BookCopiesEntity> bookCopiesByUser) {
         this.bookCopiesByUser = bookCopiesByUser;
     }
 }

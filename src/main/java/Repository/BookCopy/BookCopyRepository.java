@@ -44,7 +44,7 @@ public class BookCopyRepository implements IBookCopyRepository {
     }
 
     @Override
-    public Set<BookCopiesEntity> findBookCopiesByUser(int userID) {
+    public List<BookCopiesEntity> findBookCopiesByUser(int userID) {
         UsersEntity user = em.find(UsersEntity.class, userID);
         return user.getBookCopiesByUser();
     }

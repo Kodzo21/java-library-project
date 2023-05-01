@@ -52,7 +52,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public Set<BookCopiesEntity> getUserBookCopies(int ID) {
+    public List<BookCopiesEntity> getUserBookCopies(int ID) {
         UsersEntity user = em.find(UsersEntity.class, ID);
         return user.getBookCopiesByUser();
     }
@@ -66,7 +66,6 @@ public class UserRepository implements IUserRepository {
             tr.begin();
             bookCopy.setFree((byte) 0);
             user.getBookCopiesByUser().add(bookCopy);
-            user.getBookBorrowsByIdUser().add(bookBorrow);
             em.merge(user);
             tr.commit();
         } catch (Exception e) {

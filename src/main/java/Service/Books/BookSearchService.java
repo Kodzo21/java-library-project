@@ -48,7 +48,7 @@ public class BookSearchService implements IBookSearchService {
         IBookCopyRepository bookCopyRepository
                 = new BookCopyRepository(EntityManagerSingleton.getInstance().getEntityManager());
         return bookCopyRepository
-                .findBookCopiesByUser(userID).stream().toList();
+                .findBookCopiesByUser(userID);
     }
 
 //    @Override

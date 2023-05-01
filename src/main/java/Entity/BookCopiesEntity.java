@@ -32,7 +32,7 @@ public class BookCopiesEntity {
     private PublishersEntity publishersByPublisherId;
 
     @ManyToMany(mappedBy="bookCopiesByUser")
-    private Set<UsersEntity> usersByBookCopy;
+    private List<UsersEntity> usersByBookCopy;
 
     public int getIdCopy() {
         return idCopy;
